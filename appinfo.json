@@ -1,0 +1,25 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "pebble@julianoptics.com",
+    "enableMultiJS": true,
+    "longName": "NightFace",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "NightFace",
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk"
+    ],
+    "uuid": "2c916c60-df56-4a8e-a6c3-c7402f7f5aae",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
