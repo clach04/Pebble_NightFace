@@ -17,13 +17,18 @@ static void update_time() {
   text_layer_set_text(s_time_layer, s_buffer);
 }
 
-static void tick_handler(struct tm *tick_time, TimeUnits units_changes) {
-  update_time();
+static void update_timer_callback(void *data) {
+  // Make Time Invisible
+  text_layer_set_text_color(s_time_layer, GColorClear);
 }
 
 static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   // A tap event occured
+  update_time();
+  // Make Time Visible
   text_layer_set_text_color(s_time_layer, GColorDarkGray);
+  // Register an timer for 5 seconds to make the time invisible
+  AppTimer *updateTimer = app_timer_register(5000, (AppTimerCallback) update_timer_callback, NULL);
 }
 
 static void main_window_load(Window *window) {
@@ -38,6 +43,7 @@ static void main_window_load(Window *window) {
   // Improve the layout to be more like a watchface
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_text_color(s_time_layer, GColorClear);
+  //text_layer_set_text(s_time_layer, "00:00");
   text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
   
@@ -60,9 +66,6 @@ static void init() {
     .unload = main_window_unload
   });
   
-  // Register with TickTimerService
-  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
-  
   // Subscribe to tap events
   accel_tap_service_subscribe(accel_tap_handler);
   
@@ -71,9 +74,6 @@ static void init() {
   
   // Set Window background color
   window_set_background_color(s_main_window, GColorBlack);
-  
-  // Make sure the time is displayer from the start
-  update_time();
 }
 
 static void deinit() {
