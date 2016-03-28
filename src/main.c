@@ -19,14 +19,14 @@ static void update_time() {
 
 static void update_timer_callback(void *data) {
   // Make Time Invisible
-  text_layer_set_text_color(s_time_layer, GColorClear);
+  text_layer_set_text_color(s_time_layer, GColorBlack);
 }
 
 static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   // A tap event occured
   update_time();
   // Make Time Visible
-  text_layer_set_text_color(s_time_layer, GColorDarkGray);
+  text_layer_set_text_color(s_time_layer, PBL_IF_COLOR_ELSE(GColorDarkGray, GColorWhite));
   // Register an timer for 5 seconds to make the time invisible
   AppTimer *updateTimer = app_timer_register(5000, (AppTimerCallback) update_timer_callback, NULL);
 }
@@ -41,9 +41,8 @@ static void main_window_load(Window *window) {
       GRect(0, PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 50));
   
   // Improve the layout to be more like a watchface
-  text_layer_set_background_color(s_time_layer, GColorClear);
-  text_layer_set_text_color(s_time_layer, GColorClear);
-  //text_layer_set_text(s_time_layer, "00:00");
+  text_layer_set_background_color(s_time_layer, GColorBlack);
+  text_layer_set_text_color(s_time_layer, GColorBlack);
   text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
   
